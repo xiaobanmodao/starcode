@@ -1,0 +1,58 @@
+{
+  "name": "starcode",
+  "productName": "StarCode",
+  "version": "0.1.0",
+  "description": "面向信息学奥赛训练的轻量 C++ 编辑器",
+  "main": ".vite/build/index.js",
+  "author": "StarCode Contributors",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "npm run package && playwright test",
+    "test:smoke:windows": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/smoke-windows.ps1",
+    "release:prepare": "node scripts/prepare-release-assets.mjs",
+    "toolchain:windows": "node scripts/prepare-windows-toolchain.mjs"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^6.0.0",
+    "electron-squirrel-startup": "^1.0.1",
+    "lucide-react": "^0.525.0",
+    "monaco-editor": "^0.55.1",
+    "node-pty": "^1.1.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zod": "^4.0.0",
+    "zustand": "^5.0.6"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.11.2",
+    "@electron-forge/maker-dmg": "^7.11.2",
+    "@electron-forge/maker-squirrel": "^7.11.2",
+    "@electron-forge/maker-zip": "^7.11.2",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.11.2",
+    "@electron-forge/plugin-vite": "^7.11.2",
+    "@playwright/test": "^1.54.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^24.0.0",
+    "@types/electron-squirrel-startup": "^1.0.2",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^5.0.0",
+    "electron": "^43.1.1",
+    "jsdom": "^26.1.0",
+    "typescript": "^5.8.3",
+    "vite": "^8.1.4",
+    "vitest": "^4.1.10"
+  },
+  "overrides": {
+    "dompurify": "3.4.12"
+  }
+}

@@ -1,0 +1,79 @@
+name: build-installers
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+jobs:
+  windows-x64:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+      - run: npm ci
+      - run: npm run toolchain:windows -- --with-sources
+        env:
+          MSYS2_ROOT: C:\msys64
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run make -- --arch=x64
+      - name: Verify packaged resources and launch StarCode
+        shell: pwsh
+        run: ./scripts/smoke-windows.ps1 -PackagedAppDir "$env:GITHUB_WORKSPACE\out\StarCode-win32-x64" -MakeDir "$env:GITHUB_WORKSPACE\out\make"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: StarCode-Windows-x64
+          path: |
+            out/make/**
+            licenses/third-party-sources/**
+
+  macos-arm64:
+    runs-on: macos-14
+    env:
+      npm_config_arch: arm64
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run make -- --arch=arm64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: StarCode-macOS-arm64
+          path: out/make/**
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [windows-x64, macos-arm64]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@v4
+        with:
+          path: downloaded-artifacts
+      - name: Prepare release files and checksums
+        run: node scripts/prepare-release-assets.mjs downloaded-artifacts release-assets
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" release-assets/* --generate-notes --title "$GITHUB_REF_NAME"

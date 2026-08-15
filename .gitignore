@@ -1,0 +1,9 @@
+node_modules/
+.vite/
+out/
+dist/
+playwright-report/
+test-results/
+.DS_Store
+resources/toolchains/windows-x64/
+!resources/toolchains/toolchain-lock.json

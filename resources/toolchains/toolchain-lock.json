@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "platform": "windows-x64",
+  "environment": "ucrt64",
+  "bootstrap": {
+    "version": "20260611",
+    "url": "https://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20260611.sfx.exe",
+    "sha256": "c105946e64e08f099ac0e4647461ce762b95333ad211777666476a9a41451d65"
+  },
+  "packages": [
+    {
+      "name": "mingw-w64-ucrt-x86_64-gcc",
+      "version": "16.1.0-5",
+      "sha256": "2b5be791133f5fafac2537ad9d1579c9a421b791d7bf57fba6fb54484ec59622",
+      "source": "https://mirror.msys2.org/mingw/sources/mingw-w64-gcc-16.1.0-5.src.tar.zst"
+    },
+    {
+      "name": "mingw-w64-ucrt-x86_64-gdb",
+      "version": "17.2-1",
+      "sha256": "f7e8b521cb8ba7788635349cfcec5d3a7c1fbd0404dc0e1908b27b199fc44ef3",
+      "source": "https://mirror.msys2.org/mingw/sources/mingw-w64-gdb-17.2-1.src.tar.zst"
+    },
+    {
+      "name": "mingw-w64-ucrt-x86_64-clang",
+      "version": "22.1.8-1",
+      "sha256": "a1c67165abb6671bdb90582840ca4cef306b02cd8b48225d0dae3f19519bb128",
+      "source": "https://mirror.msys2.org/mingw/sources/mingw-w64-llvm-22.1.8-1.src.tar.zst"
+    },
+    {
+      "name": "mingw-w64-ucrt-x86_64-clang-tools-extra",
+      "version": "22.1.8-1",
+      "sha256": "ca0cb688b718ce1c95a91976957201bafab348cf823b06b7fc0332335452cf3e",
+      "source": "https://mirror.msys2.org/mingw/sources/mingw-w64-llvm-22.1.8-1.src.tar.zst"
+    }
+  ]
+}
